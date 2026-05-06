@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealVision | Disease Prediction</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">HealVision</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="signup.html" class="nav-link">Sign Up</a></li>
+
+          <li class="nav-item d-flex align-items-center ms-3">
+            <label class="form-check-label text-white me-2" for="voiceToggle">🔊 Voice Mode</label>
+            <input type="checkbox" id="voiceToggle" class="form-check-input">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <div class="container py-4">
+    <div class="predict-banner"></div>
+  </div>
+
+  <!-- Main Section -->
+  <div class="container py-3">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body p-5">
+            <h2 class="text-center text-primary fw-bold mb-4">Disease Prediction</h2>
+            <p class="text-muted text-center mb-4">
+              Enter your symptoms below or select from the list. HealVision will predict the most likely disease and suggest medicines, precautions, diet, and workouts.
+            </p>
+
+            <!-- Patient Info -->
+            <div class="row mb-3 g-3">
+              <div class="col-md-4">
+                <input type="text" id="patientName" class="form-control" placeholder="Name">
+              </div>
+              <div class="col-md-4">
+                <input type="number" id="patientAge" class="form-control" placeholder="Age">
+              </div>
+              <div class="col-md-4">
+                <select id="patientGender" class="form-select">
+                  <option value="">Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <textarea id="medicalHistory" class="form-control" placeholder="Medical history / notes (optional)"></textarea>
+            </div>
+
+            <!-- Symptoms Form -->
+            <form id="predictForm">
+
+              <!-- Symptom Checkbox Section -->
+              <div class="mb-3 d-flex justify-content-between align-items-center">
+                <label class="form-label mb-0">Select Symptoms</label>
+                <button type="button" id="toggleSymptomGrid" class="btn btn-sm btn-outline-primary">
+                  Show Symptoms List
+                </button>
+              </div>
+
+              <!-- Checkbox Container -->
+              <div id="symptomCheckboxes" class="d-none mb-3">
+                <p><strong>Select your symptoms:</strong></p>
+                <div class="symptom-grid"></div>
+              </div>
+
+              <div class="text-center mb-3">
+                <small class="text-muted">or enter symptoms manually below 👇</small>
+              </div>
+
+              <!-- ========================= -->
+              <!-- 🔵 NEW: Manual Input + Mic -->
+              <!-- ========================= -->
+              <div class="mb-3 position-relative">
+                <img src="assets/symptom_icon.png" class="symptom-input-icon-img" alt="Symptom Icon">
+                
+                <input 
+                  type="text" 
+                  id="manualSymptoms" 
+                  class="form-control symptom-input"
+                  placeholder="e.g., fever, headache, nausea"
+                >
+
+                <!-- 🔵 Floating Mic Button -->
+                <button type="button" id="micButton" class="mic-btn">
+                  🎤
+                </button>
+              </div>
+
+              <!-- 🔵 NEW: Waveform Visualizer -->
+              <div id="voiceWaveform" class="voice-waveform d-none">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+              </div>
+
+              <!-- 🔵 NEW: Listening Overlay -->
+              <div id="listeningOverlay" class="listening-overlay d-none">
+                <div class="listening-box">
+                  <div class="listening-mic">🎤</div>
+                  <p class="listening-text">Listening... Speak your symptoms</p>
+                  <button id="stopListeningBtn" class="stop-btn">Stop</button>
+                </div>
+              </div>
+              <!-- END NEW -->
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary px-4">Predict</button>
+              </div>
+            </form>
+
+            <!-- Loading Spinner -->
+            <div id="loadingBox" class="mt-4 text-center d-none">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Predicting...</p>
+            </div>
+
+            <!-- Results -->
+            <div id="resultBox" class="mt-5 p-4 bg-light border rounded d-none">
+              <h4 class="text-success">Prediction Result</h4>
+              <p><strong>Disease:</strong> <span id="diseaseName"></span></p>
+              <p><strong>Description:</strong> <span id="diseaseDescription"></span></p>
+              <p><strong>Medicines:</strong> <span id="medicationsList"></span></p>
+              <p><strong>Precautions:</strong> <span id="precautionsList"></span></p>
+              <p><strong>Diet:</strong> <span id="dietList"></span></p>
+              <p><strong>Workout:</strong> <span id="workoutsList"></span></p>
+              <p><strong>Confidence:</strong> <span id="confidenceField">—</span></p>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Popup -->
+  <div id="historyPopup" class="popup">
+    <div class="popup-content">
+      <h3 class="text-center text-primary mb-3">🩺 Prediction History</h3>
+      <div id="historyList" style="max-height: 400px; overflow-y: auto;"></div>
+      <div class="text-center mt-3">
+        <button class="btn btn-secondary" onclick="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Prediction Popup -->
+  <div id="currentPredictionPopup" class="popup" style="display:none;"></div>
+
+  <!-- Prediction Report -->
+  <div id="reportPopup" class="popup" style="display:none;">
+    <div class="popup-content report-popup bg-white rounded shadow p-4" style="max-width: 700px;">
+      <h4 class="text-center text-primary mb-3">🩺 Prediction Report</h4>
+      <div id="reportContent"></div>
+      <div class="text-center mt-4">
+        <button id="closeReportBtn" class="btn btn-secondary px-4">Close</button>
+        <button id="downloadPdfBtn">📄 Save as PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Files -->
+  <script type="module" src="voiceAssistant.js"></script>
+  <script src="script.js"></script>
+  <script src="voiceSymptoms.js"></script> <!-- 🔵 NEW FILE ADDED -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
+</body>
+</html>

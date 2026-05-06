@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - HealVision</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <!-- Separate Auth CSS -->
+  <link rel="stylesheet" href="auth.css" />
+</head>
+
+<body class="auth-page">
+  <div class="auth-container">
+    <!-- ✅ Left Side Image -->
+    <div class="auth-side d-none d-md-flex">
+      <img src="assets/login_side.png" alt="HealVision Login" class="auth-side-img" />
+    </div>
+
+    <!-- ✅ Right Side Form -->
+    <div class="auth-wrapper">
+      <!-- Logo -->
+      <div class="auth-logo text-center mb-3">
+        <img src="assets/healvision_logo.png" alt="HealVision Logo" class="logo-img" />
+      </div>
+
+      <div class="auth-card fade-in">
+        <h2>Welcome Back 👋</h2>
+        <p class="muted">Login to continue using HealVision</p>
+
+        <!-- Email/Password Login Form -->
+        <form id="loginForm" novalidate>
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required minlength="6" autocomplete="current-password" />
+          </div>
+
+          <button type="submit" class="btn primary full">Login</button>
+        </form>
+
+        <!-- OR Divider -->
+        <div class="divider"><span>OR</span></div>
+
+        <!-- Google Login -->
+        <a href="http://127.0.0.1:5000/auth/google" class="google-btn">
+          <img src="https://img.icons8.com/color/24/google-logo.png" alt="Google" />
+          Continue with Google
+        </a>
+
+        <!-- Switch to Signup -->
+        <p class="switch-auth">
+          Don’t have an account?
+          <a href="signup.html">Sign up</a>
+        </p>
+
+        <p id="loginMessage" class="auth-message"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- External JS -->
+  <script src="auth.js"></script>
+</body>
+</html>
