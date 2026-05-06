@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HealVision — Smart Diagnosis & Treatment Assistant</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <img src="assets/healvision_logo.png" alt="HealVision Logo" class="logo-img" />
+        <div class="brand-text">
+          <div class="title">HealVision</div>
+          <div class="subtitle">Smart Diagnosis & Treatment Assistant</div>
+        </div>
+      </div>
+
+      <nav class="nav-actions d-flex align-items-center gap-3">
+        <!-- ✅ Voice Mode Toggle -->
+        <div class="voice-toggle">
+          <label class="switch">
+            <input type="checkbox" id="voiceToggle">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label">Voice Mode</span>
+        </div>
+
+        <a href="about.html" class="btn ghost">About</a>
+        <a href="docs.html" class="btn ghost">Docs</a>
+
+        <!-- Dynamic Auth Controls -->
+        <div id="userInfo" class="user-info">
+          <a href="login.html" class="btn ghost small">Login</a>
+          <a href="signup.html" class="btn primary small">Sign Up</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero text-center py-5 bg-light position-relative">
+    <img src="assets/home_banner.png" alt="HealVision Home Banner" class="hero-bg" />
+    <div class="container position-relative">
+      <h1 class="fw-bold mt-4">Welcome to HealVision</h1>
+      <p class="lead">Your AI-powered assistant for smart diagnosis, chatbot health guidance, and personalized wellness tips.</p>
+      <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
+        <a id="startDiagnosisBtn" href="predict.html" class="btn primary btn-lg start-protected">Start Diagnosis</a>
+        <a id="openChatbotBtn" href="chatbot.html" class="btn chatbot">Open Chatbot</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards Section -->
+  <main class="container my-5">
+    <div class="row g-4">
+      <!-- Prediction Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-lg homepage-card border-0">
+          <div class="card-body text-center">
+            <img src="assets/predict_banner.png" alt="Disease Prediction" class="card-img-top mb-3 card-icon">
+            <h5 class="card-title fw-bold">Disease Prediction</h5>
+            <p class="card-text">Enter symptoms and get AI-based predictions with medicines, precautions, and more.</p>
+            <a href="predict.html" class="btn primary start-protected">Try Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chatbot Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-lg homepage-card border-0">
+          <div class="card-body text-center">
+            <img src="assets/chatbot_icon.png" alt="AI Chatbot" class="card-img-top mb-3 card-icon">
+            <h5 class="card-title fw-bold">AI Chatbot</h5>
+            <p class="card-text">Chat with HealVision's intelligent assistant for medical Q&A, diet advice, and emergency tips.</p>
+            <a href="chatbot.html" class="btn chatbot" id="chatNowBtn">Chat Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Project Card -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-lg homepage-card border-0">
+          <div class="card-body text-center">
+            <img src="assets/about_healthcare.png" alt="About HealVision" class="card-img-top mb-3 card-icon">
+            <h5 class="card-title fw-bold">About HealVision</h5>
+            <p class="card-text">Learn more about the HealVision project, objectives, and technology behind it.</p>
+            <a href="about.html" class="btn primary">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why HealVision -->
+    <div class="row mt-5 align-items-center">
+      <div class="col-md-6 text-center text-md-start">
+        <h3 class="fw-bold mb-3">Why Choose HealVision?</h3>
+        <p class="muted">
+          We combine <strong>AI + Medical Knowledge</strong> to provide accurate predictions, safe health guidance, and lifestyle recommendations — all in one platform.
+        </p>
+      </div>
+      <div class="col-md-6 text-center">
+        <img src="assets/result_ai.png" alt="AI Illustration" class="img-fluid rounded shadow-sm" style="max-width: 80%; height: auto;">
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer py-3 text-center bg-light">
+    <div class="container-sm">
+      <img src="assets/healvision_logo.png" alt="HealVision Footer Logo" width="35" class="me-2 align-middle">
+      <small>© HealVision — Educational tool only. Not a substitute for professional medical advice.</small>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- ✅ Unified Scripts -->
+  <script type="module" src="voiceAssistant.js"></script>
+  <script src="script.js"></script>
+
+  <!-- ✅ Dynamic Auth Logic (keep only one) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const userInfoDiv = document.getElementById("userInfo");
+      const protectedLinks = document.querySelectorAll(".start-protected");
+
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        const userData = JSON.parse(localStorage.getItem("user") || "{}");
+        userInfoDiv.innerHTML = `
+          <span class="me-2">👋 Hi, ${userData.name || "User"}</span>
+          <a href="profile.html" class="btn ghost small">Profile</a>
+          <button id="logoutBtn" class="btn danger small">Logout</button>
+        `;
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          location.reload();
+        });
+      } else {
+        userInfoDiv.innerHTML = `
+          <a href="login.html" class="btn ghost small">Login</a>
+          <a href="signup.html" class="btn primary small">Sign Up</a>
+        `;
+      }
+
+      protectedLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+          if (!token) {
+            e.preventDefault();
+            alert("Please login first to access this feature.");
+            window.location.href = "login.html";
+          }
+        });
+      });
+
+      // ✅ Voice Toggle Persistence
+      const voiceToggle = document.getElementById("voiceToggle");
+      const savedVoice = localStorage.getItem("voiceMode") === "on";
+      voiceToggle.checked = savedVoice;
+
+      voiceToggle.addEventListener("change", () => {
+        const enabled = voiceToggle.checked;
+        localStorage.setItem("voiceMode", enabled ? "on" : "off");
+        alert(`Voice Mode ${enabled ? "Enabled 🔊" : "Disabled 🔇"}`);
+      });
+    });
+  </script>
+
+ 
+</body>
+</html>
