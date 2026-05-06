@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HealVision | AI Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">HealVision</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="signup.html" class="nav-link">Sign Up</a></li>
+          <li class="nav-item d-flex align-items-center ms-3">
+            <label class="form-check-label text-white me-2" for="voiceToggle">🔊 Voice Mode</label>
+            <input type="checkbox" id="voiceToggle" class="form-check-input">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Chatbot Container -->
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body p-4">
+            <h2 class="text-center text-primary fw-bold mb-3">AI Health Chatbot</h2>
+            <p class="text-muted text-center mb-4">
+              Select a mode and start chatting with HealVision!
+            </p>
+
+            <!-- Patient Info -->
+            <div class="row mb-3 g-3">
+              <div class="col-md-4">
+                <input id="patientName" class="form-control" placeholder="Name">
+              </div>
+              <div class="col-md-4">
+                <input id="patientAge" type="number" class="form-control" placeholder="Age">
+              </div>
+              <div class="col-md-4">
+                <select id="patientGender" class="form-select">
+                  <option value="">Gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <textarea id="medicalHistory" class="form-control mb-3" placeholder="Medical history / notes (optional)"></textarea>
+
+            <!-- Mode Buttons -->
+            <div class="d-flex flex-wrap gap-2 justify-content-center mb-3">
+              <button id="aiButton" class="chat-mode btn btn-outline-success">Ask AI</button>
+              <button id="dietButton" class="chat-mode btn btn-outline-warning">Diet & Lifestyle</button>
+              <button id="emergencyButton" class="chat-mode btn btn-outline-danger">Emergency Check</button>
+              <button id="tipsButton" class="chat-mode btn btn-outline-info">Daily Tips</button>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loadingBox" class="text-center d-none">
+              <div class="spinner-border text-primary" role="status"></div>
+              <p class="mt-2">Processing...</p>
+            </div>
+
+            <!-- Chat Popup -->
+            <div id="chatPopup" class="chat-popup">
+              <div class="popup-inner">
+                <div class="popup-header d-flex justify-content-between align-items-center">
+                  <h5 id="popupTitle" class="mb-0 fw-bold">Chat</h5>
+                  <button id="closeChatPopup" class="btn btn-sm btn-outline-secondary">×</button>
+                </div>
+                <div id="chatMessages" class="chat-messages overflow-auto" style="max-height:400px;"></div>
+                <div class="popup-input mt-2 d-flex gap-2">
+                  <input id="chatMessageBox" class="form-control" placeholder="Type your message..." />
+                  <button id="sendMsgBtn" class="btn btn-primary">Send</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="voiceAssistant.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    // ✅ Voice Toggle Persistence
+    document.addEventListener("DOMContentLoaded", () => {
+      const voiceToggle = document.getElementById("voiceToggle");
+      const savedVoice = localStorage.getItem("voiceMode") === "on";
+      voiceToggle.checked = savedVoice;
+
+      voiceToggle.addEventListener("change", () => {
+        const enabled = voiceToggle.checked;
+        localStorage.setItem("voiceMode", enabled ? "on" : "off");
+        alert(`Voice Mode ${enabled ? "Enabled 🔊" : "Disabled 🔇"}`);
+      });
+    });
+  </script>
+</body>
+</html>
